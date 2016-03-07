@@ -6,25 +6,91 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1 class="text-center">CS 467 Campus Journeys</h1>
-    <div id="calendar"></div>
-    <!--<div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Modal title</h4>
+    <div class="container-fluid">
+        <div class="row">
+            <h1 class="text-center">CS 467 Campus Journeys</h1>
+            <div class="col-md-offset-1 col-md-10">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Our goal with this visualization is to show how current students move around campus over the course of different time periods. We will require you to fill out some information such as what you're currently studying and what your year in school is.</p>
+                        <p>We currently have two options for you to input location data: 1) Google Location History (if you use it), 2) our dedicated calendar.</p>
+                        <p>All of your data will be anonymized. We promise not to reveal any identifying information about you tied to your locations or times.</p>
+                        <button class="btn btn-primary" onclick="revealRow('idGenerateRow')">Continue</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p>One fine body&hellip;</p>
+                <div class="row breaker-row"></div>
+                <div class="row" id="idGenerateRow">
+                    <div class="col-md-12">
+                        <p>First, let's generate a random ID for you. Your random ID is <b><span id="randID"></span></b>.</p>
+                        <p>How would you like to input your data?</p>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" onclick="revealRow('userInput')">Input Your Own</button>
+                            <button type="button" class="btn btn-default" onclick="revealRow('locHistory')">Google Location History</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                <div class="row breaker-row"></div>
+                <div class="row" id="userInput">
+                    <div class="col-md-12">
+                        <p>Fill out the form fields. Select Week to display the calendar. Fill out your weekly schedule. Once you are ready, click Save.</p>
+                        <form class="form" id="userInputFormSubmit">
+                            <div class="form-group">
+                                <label>Major</label>
+                                <select class="form-control" required>
+                                    <option value="Computer Science (ENG)">Computer Science (ENG)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Year in School</label>
+                                <select class="form-control" required>
+                                    <option value="freshman">Freshman</option>
+                                    <option value="sophomore">Sophomore</option>
+                                    <option value="junior">Junior</option>
+                                    <option value="senior">Senior</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Does your major require you to double major or minor?</label>
+                                <div class="radio">
+                                    <label>
+                                        <input name="yesnoDoublemajor" type="radio" value="yes"> Yes</input>
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input name="yesnoDoublemajor" type="radio" value="no"> No</input>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>If you are double majoring or minoring in something, add those below, one per line.</label>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>When you first started at UIUC, did you come in with AP/IB or transfer credit?</label>
+                                <div class="radio">
+                                    <label>
+                                        <input name="apib" type="radio" value="yes"> Yes</input>
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input name="apib" type="radio" value="no"> No</input>
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                        <div id="calendar"></div>
+                        <!-- modal here -->
+                    </div>
+                </div>
+                <div class="row" id="locHistory">
+                    <!-- upload Google Location History -->
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>

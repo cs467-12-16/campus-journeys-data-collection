@@ -1,0 +1,7 @@
+#idGenerateRow, #userInput, #locHistory {
+    display: none;
+}
+
+.breaker-row {
+    height: 50px;
+}
