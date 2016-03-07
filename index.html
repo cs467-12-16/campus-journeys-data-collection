@@ -21,7 +21,7 @@
                 <div class="row breaker-row"></div>
                 <div class="row" id="idGenerateRow">
                     <div class="col-md-12">
-                        <p>First, let's generate a random ID for you. Your random ID is <b><span id="randID"></span></b>.</p>
+                        <p>First, let's generate a random ID for you. Your random ID is <b><span class="randID"></span></b>.</p>
                         <p>How would you like to input your data?</p>
                         <div class="btn-group">
                             <button type="button" class="btn btn-default" onclick="revealRow('userInput')">Input Your Own</button>
@@ -86,7 +86,17 @@
                     </div>
                 </div>
                 <div class="row" id="locHistory">
-                    <!-- upload Google Location History -->
+                    <div class="col-md-12">
+                        <h5>How to obtain Location History data</h5>
+                        <ol>
+                            <li>Go to <a href="https://takeout.google.com/settings/takeout" target="_blank">Google Takeout</a>.</li>
+                            <li>Make sure Location History is checked.</li>
+                            <li>Click Create Archive.</li>
+                            <li>Extract the zip file.</li>
+                            <li>Upload the JSON file to this <a href="https://drive.google.com/folderview?id=0B453AFEDjNjyMnVQNkR0blpjazg&usp=sharing" target="_blank">Google Drive folder</a>. The name of the file should be <span class="randID"></span>.json.</li>
+                        </ol>
+                        <button class="btn btn-primary" onclick="confirmSubmission()">I have completed the above steps</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -28,7 +28,7 @@ function saveIDToFirebase() {
         id = generateID();
     }
     var ref = dataStore.child(id);
-    $('#randID').text(id);
+    $('.randID').text(id);
     return ref;
 }
 
@@ -42,6 +42,12 @@ function revealRow(idOfRow) {
     } else if (idOfRow.indexOf('locHistory') >= 0) {
         $('#userInput').css('display', 'none');
     }
+}
+
+function confirmSubmission() {
+    childRef.set({
+        type: 'google'
+    });
 }
 
 $(document).ready(function() {
@@ -73,6 +79,4 @@ $(document).ready(function() {
             console.log(event);
         }
 	});
-
-    // form submit actions here
 });
