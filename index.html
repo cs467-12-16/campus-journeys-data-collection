@@ -10,7 +10,7 @@
         <div class="row">
             <h1 class="text-center">CS 467 Campus Journeys</h1>
             <div class="col-md-offset-1 col-md-10">
-                <div class="row">
+                <div class="row" id="disclaimerRow">
                     <div class="col-md-12">
                         <p>Our goal with this visualization is to show how current students move around campus over the course of different time periods. We will require you to fill out some information such as what you're currently studying and what your year in school is.</p>
                         <p>We currently have two options for you to input location data: 1) Google Location History (if you use it), 2) our dedicated calendar.</p>
@@ -21,8 +21,9 @@
                 <div class="row breaker-row"></div>
                 <div class="row" id="idGenerateRow">
                     <div class="col-md-12">
-                        <p>First, let's generate a random ID for you. Your random ID is <b><span class="randID"></span></b>. Please enter the following form fields before continuing.</p>
+                        <p>First, let's generate a random ID for you. Your random ID is <b><span class="randID"></span></b>.</p>
                         <form class="form" id="userInputFormSubmit">
+                            <p>Please enter the following form fields before continuing.</p>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Major</label>
@@ -97,8 +98,8 @@
                 <div class="row breaker-row"></div>
                 <div class="row" id="userInput">
                     <div class="col-md-12">
-                        <p>Select Week to display the calendar. Fill out your weekly schedule. Once you're ready, click save.</p>
-                        <button class="btn btn-primary" onclick="confirmSubmissionUser()"></button>
+                        <p>Select Week to display the calendar. Fill out your weekly schedule. Once you're ready, click Save.</p>
+                        <button class="btn btn-primary" onclick="confirmSubmissionUser()">Save</button>
                         <div id="calendar"></div>
                         <div id="eventModal" class="modal fade">
                             <div class="modal-dialog">
@@ -125,11 +126,11 @@
                                             </div>
                                             <div class="form-group hidden">
                                                 <label>Start:</label>
-                                                <input type="text" class="form-control" id="startTime"></input>
+                                                <input type="hidden" class="form-control" id="startTime"></input>
                                             </div>
                                             <div class="form-group hidden">
                                                 <label>End:</label>
-                                                <input type="text" class="form-control" id="endTime"></input>
+                                                <input type="hidden" class="form-control" id="endTime"></input>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -165,6 +166,7 @@
     <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.1/fullcalendar.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -37,6 +37,7 @@ function revealRow(idOfRow) {
     $('#' + idOfRow).css('display', 'block');
     if (idOfRow.indexOf('id') >= 0) {
         childRef = saveIDToFirebase();
+        $('#disclaimerRow').css('display', 'none');
     } else if (idOfRow.indexOf('userInput') >= 0) {
         $('#locHistory').css('display', 'none');
     } else if (idOfRow.indexOf('locHistory') >= 0) {
@@ -57,25 +58,32 @@ function confirmSubmissionGoogle() {
 }
 
 function confirmSubmissionUser() {
-    childRef.child('location').set($('#calendar').fullCalendar('clientEvents'));
+    var events = $('#calendar').fullCalendar('clientEvents');
+    for (var i = 0; i < events.length; i++) {
+        var e = events[i];
+        childRef.child('locations').push({
+            start: e.start,
+            end: e.end,
+            type: e.type,
+            location: e.location
+        });
+    }
     revealRow('thanks');
 }
 
 $(document).ready(function() {
     // Calendar setup
     $('#calendar').fullCalendar({
-		header: {
-			left: 'prev,next',
-			center: 'title',
-			right: 'agendaWeek,agendaDay'
-		},
+        defaultView: 'agendaWeek',
 		defaultDate: Date.now(),
 		selectable: true,
 		selectHelper: true,
+        ignoreTimezone: true,
 		select: function(start, end) {
             //http://jsfiddle.net/mccannf/azmjv/16/
             $('#startTime').val(start);
             $('#endTime').val(end);
+            console.log(start, end);
             $('#eventModal').modal('show');
 		},
 		editable: true,
@@ -93,15 +101,16 @@ $(document).ready(function() {
     });
 
     $('#userInputFormSubmit').on('submit', function(event) {
+        event.preventDefault();
         var major = $('#majorDropdown').val();
         var year = $('#yearDropdown').val();
         var requiresDoubleMajor = $('input[name=yesnoDoublemajor]:checked').val();
         var apib = $('input[name=apib]:checked').val();
         var addlMajors, addlMinors;
-        if ($('#addlMajors').val().length > 0) {
+        if ($('#addlMajors').val() !== undefined) {
             addlMajors = $('#addlMajors').val().split('\n');
         }
-        if ($('#addlMinors').val().length > 0) {
+        if ($('#addlMinors').val() !== undefined) {
             addlMinors = $('#addlMinors').val().split('\n');
         }
         childRef.set({
@@ -111,7 +120,7 @@ $(document).ready(function() {
             apib: apib,
             addlMajors: addlMajors,
             addlMinors: addlMinors,
-            type: 'tbd'
+            type: 'user'
         });
         revealRow('inputOptions');
     });
@@ -119,10 +128,12 @@ $(document).ready(function() {
     $('#userEventForm').on('submit', function(event) {
         event.preventDefault();
         $('#eventModal').modal('hide');
+        console.log($('#startTime').val());
+        console.log($('#endTime').val());
         var eventData = {
             location: $('#locationOfEvent').val(),
-            start: new Date($('#startTime').val()),
-            end: new Date($('#endTime').val()),
+            start: $('#startTime').val(),
+            end: $('#endTime').val(),
             type: $('#activityTypeDropdown').val()
         };
         $('#calendar').fullCalendar('renderEvent', eventData, true);
