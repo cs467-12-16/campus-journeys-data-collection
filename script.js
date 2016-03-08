@@ -41,13 +41,24 @@ function revealRow(idOfRow) {
         $('#locHistory').css('display', 'none');
     } else if (idOfRow.indexOf('locHistory') >= 0) {
         $('#userInput').css('display', 'none');
+    } else if (idOfRow.indexOf('inputOptions') >= 0) {
+        $('#userInputFormSubmit').css('display', 'none');
+    } else if (idOfRow.indexOf('thanks') >= 0) {
+        $('#locHistory').css('display', 'none');
+        $('#userInput').css('display', 'none');
     }
 }
 
-function confirmSubmission() {
-    childRef.set({
+function confirmSubmissionGoogle() {
+    childRef.update({
         type: 'google'
     });
+    revealRow('thanks');
+}
+
+function confirmSubmissionUser() {
+    childRef.child('location').set($('#calendar').fullCalendar('clientEvents'));
+    revealRow('thanks');
 }
 
 $(document).ready(function() {
@@ -62,21 +73,58 @@ $(document).ready(function() {
 		selectable: true,
 		selectHelper: true,
 		select: function(start, end) {
-			var title = prompt('Location:');
-			var eventData;
-			if (title) {
-				eventData = {
-					title: title,
-					start: start,
-					end: end
-				};
-				$('#calendar').fullCalendar('renderEvent', eventData, true);
-			}
-			$('#calendar').fullCalendar('unselect');
+            //http://jsfiddle.net/mccannf/azmjv/16/
+            $('#startTime').val(start);
+            $('#endTime').val(end);
+            $('#eventModal').modal('show');
 		},
 		editable: true,
         eventClick: function(event) {
             console.log(event);
         }
 	});
+
+    $.getJSON('json/majors.json', function(data) {
+        var items = [];
+        $.each(data, function(value) {
+            items.push('<option value="' + data[value] + '">' + data[value] + '</option>');
+        });
+        $('#majorDropdown').html(items.join(""));
+    });
+
+    $('#userInputFormSubmit').on('submit', function(event) {
+        var major = $('#majorDropdown').val();
+        var year = $('#yearDropdown').val();
+        var requiresDoubleMajor = $('input[name=yesnoDoublemajor]:checked').val();
+        var apib = $('input[name=apib]:checked').val();
+        var addlMajors, addlMinors;
+        if ($('#addlMajors').val().length > 0) {
+            addlMajors = $('#addlMajors').val().split('\n');
+        }
+        if ($('#addlMinors').val().length > 0) {
+            addlMinors = $('#addlMinors').val().split('\n');
+        }
+        childRef.set({
+            major: major,
+            year: year,
+            requiresDoubleMajor: requiresDoubleMajor,
+            apib: apib,
+            addlMajors: addlMajors,
+            addlMinors: addlMinors,
+            type: 'tbd'
+        });
+        revealRow('inputOptions');
+    });
+
+    $('#userEventForm').on('submit', function(event) {
+        event.preventDefault();
+        $('#eventModal').modal('hide');
+        var eventData = {
+            location: $('#locationOfEvent').val(),
+            start: new Date($('#startTime').val()),
+            end: new Date($('#endTime').val()),
+            type: $('#activityTypeDropdown').val()
+        };
+        $('#calendar').fullCalendar('renderEvent', eventData, true);
+    });
 });

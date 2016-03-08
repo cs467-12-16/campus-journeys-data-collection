@@ -21,68 +21,125 @@
                 <div class="row breaker-row"></div>
                 <div class="row" id="idGenerateRow">
                     <div class="col-md-12">
-                        <p>First, let's generate a random ID for you. Your random ID is <b><span class="randID"></span></b>.</p>
-                        <p>How would you like to input your data?</p>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default" onclick="revealRow('userInput')">Input Your Own</button>
-                            <button type="button" class="btn btn-default" onclick="revealRow('locHistory')">Google Location History</button>
+                        <p>First, let's generate a random ID for you. Your random ID is <b><span class="randID"></span></b>. Please enter the following form fields before continuing.</p>
+                        <form class="form" id="userInputFormSubmit">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Major</label>
+                                    <select class="form-control" id="majorDropdown" required>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Year in School</label>
+                                    <select id="yearDropdown" class="form-control" required>
+                                        <option value="freshman">Freshman</option>
+                                        <option value="sophomore">Sophomore</option>
+                                        <option value="junior">Junior</option>
+                                        <option value="senior">Senior</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Does your major require you to double major or minor?</label>
+                                    <div class="radio">
+                                        <label>
+                                            <input name="yesnoDoublemajor" type="radio" value="yes"> Yes</input>
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input name="yesnoDoublemajor" type="radio" value="no"> No</input>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>When you first started at UIUC, did you come in with AP/IB or transfer credit?</label>
+                                    <div class="radio">
+                                        <label>
+                                            <input name="apib" type="radio" value="yes"> Yes</input>
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input name="apib" type="radio" value="no"> No</input>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>If you are double/triple majoring, add those below, one per line.</label>
+                                    <textarea id="addlMajors" class="form-control" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>If you are minoring, add those below, one per line.</label>
+                                    <textarea id="addlMinors" class="form-control" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                        <div id="inputOptions">
+                            <p>Thanks for submitting your preliminary information. How would you like to input your data?</p>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" onclick="revealRow('userInput')">Input Your Own</button>
+                                <button type="button" class="btn btn-default" onclick="revealRow('locHistory')">Google Location History</button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row breaker-row"></div>
                 <div class="row" id="userInput">
                     <div class="col-md-12">
-                        <p>Fill out the form fields. Select Week to display the calendar. Fill out your weekly schedule. Once you are ready, click Save.</p>
-                        <form class="form" id="userInputFormSubmit">
-                            <div class="form-group">
-                                <label>Major</label>
-                                <select class="form-control" required>
-                                    <option value="Computer Science (ENG)">Computer Science (ENG)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Year in School</label>
-                                <select class="form-control" required>
-                                    <option value="freshman">Freshman</option>
-                                    <option value="sophomore">Sophomore</option>
-                                    <option value="junior">Junior</option>
-                                    <option value="senior">Senior</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Does your major require you to double major or minor?</label>
-                                <div class="radio">
-                                    <label>
-                                        <input name="yesnoDoublemajor" type="radio" value="yes"> Yes</input>
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input name="yesnoDoublemajor" type="radio" value="no"> No</input>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>If you are double majoring or minoring in something, add those below, one per line.</label>
-                                <textarea class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>When you first started at UIUC, did you come in with AP/IB or transfer credit?</label>
-                                <div class="radio">
-                                    <label>
-                                        <input name="apib" type="radio" value="yes"> Yes</input>
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input name="apib" type="radio" value="no"> No</input>
-                                    </label>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+                        <p>Select Week to display the calendar. Fill out your weekly schedule. Once you're ready, click save.</p>
+                        <button class="btn btn-primary" onclick="confirmSubmissionUser()"></button>
                         <div id="calendar"></div>
-                        <!-- modal here -->
+                        <div id="eventModal" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                                        <h4>New Event</h4>
+                                    </div>
+                                    <form class="form" id="userEventForm">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Location: feel free to be general if it's someplace like your current home.</label>
+                                                <input type="text" class="form-control" id="locationOfEvent" required></input>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Activity Type</label>
+                                                <select class="form-control" id="activityTypeDropdown" required>
+                                                    <option value="class">Class</option>
+                                                    <option value="study">Studying</option>
+                                                    <option value="fun">Fun</option>
+                                                    <option value="rso">RSO</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group hidden">
+                                                <label>Start:</label>
+                                                <input type="text" class="form-control" id="startTime"></input>
+                                            </div>
+                                            <div class="form-group hidden">
+                                                <label>End:</label>
+                                                <input type="text" class="form-control" id="endTime"></input>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row" id="locHistory">
@@ -95,8 +152,11 @@
                             <li>Extract the zip file.</li>
                             <li>Upload the JSON file to this <a href="https://drive.google.com/folderview?id=0B453AFEDjNjyMnVQNkR0blpjazg&usp=sharing" target="_blank">Google Drive folder</a>. The name of the file should be <span class="randID"></span>.json.</li>
                         </ol>
-                        <button class="btn btn-primary" onclick="confirmSubmission()">I have completed the above steps</button>
+                        <button class="btn btn-primary" onclick="confirmSubmissionGoogle()">I have completed the above steps</button>
                     </div>
+                </div>
+                <div class="row" id="thanks">
+                    <h3 class="text-center">Thanks for submitting!</h3>
                 </div>
             </div>
         </div>

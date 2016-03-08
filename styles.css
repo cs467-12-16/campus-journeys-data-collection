@@ -1,4 +1,8 @@
-#idGenerateRow, #userInput, #locHistory {
+#idGenerateRow, #userInput, #locHistory, #inputOptions {
+    display: none;
+}
+
+.hidden {
     display: none;
 }
 
